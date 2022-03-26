@@ -28,7 +28,7 @@
         android:weightSum="8">
 
         <Button
-            android:id="@+id/ButtonAC"
+            android:id="@+id/buttonAC"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
@@ -243,7 +243,7 @@
 
 
         <Button
-            android:id="@+id/buttonpoint"
+            android:id="@+id/buttonPoint"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="4dp"

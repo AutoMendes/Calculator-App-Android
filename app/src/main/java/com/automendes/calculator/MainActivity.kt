@@ -81,5 +81,67 @@ class MainActivity : AppCompatActivity() {
             else
                 textViewDisplay.text = textViewDisplay.text.toString() + "9"
         }
+
+        val button0 = findViewById<Button>(R.id.button0)
+        button0.setOnClickListener {
+            if (textViewDisplay.text == "0")
+                textViewDisplay.text = "0"
+            else
+                textViewDisplay.text = textViewDisplay.text.toString() + "0"
+        }
+
+        val buttonPlus = findViewById<Button>(R.id.buttonPlus)
+        buttonPlus.setOnClickListener {
+            if (textViewDisplay.text == "0")
+                textViewDisplay.text = "0+"
+            else
+                textViewDisplay.text = textViewDisplay.text.toString() + "+"
+        }
+
+        val buttonLess = findViewById<Button>(R.id.buttonSubtraction)
+        buttonLess.setOnClickListener {
+            if (textViewDisplay.text == "0")
+                textViewDisplay.text = "0-"
+            else
+                textViewDisplay.text = textViewDisplay.text.toString() + "-"
+        }
+
+        val buttonMultiplicate = findViewById<Button>(R.id.buttonMultiplication)
+        buttonMultiplicate.setOnClickListener {
+            if (textViewDisplay.text == "0")
+                textViewDisplay.text = "0*"
+            else
+                textViewDisplay.text = textViewDisplay.text.toString() + "*"
+        }
+
+        val buttonDivision = findViewById<Button>(R.id.buttonDivision)
+        buttonDivision.setOnClickListener {
+            if (textViewDisplay.text == "0")
+                textViewDisplay.text = "0/"
+            else
+                textViewDisplay.text = textViewDisplay.text.toString() + "/"
+        }
+
+        val buttonPoint = findViewById<Button>(R.id.buttonPoint)
+        buttonPoint.setOnClickListener {
+            if (textViewDisplay.text == "0")
+                textViewDisplay.text = "0."
+            else
+                textViewDisplay.text = textViewDisplay.text.toString() + "."
+        }
+
+        val buttonPercentage = findViewById<Button>(R.id.buttonPercentage)
+        buttonPercentage.setOnClickListener {
+            if (textViewDisplay.text == "0")
+                textViewDisplay.text = "0%"
+            else
+                textViewDisplay.text = textViewDisplay.text.toString() + "%"
+        }
+
+        val buttonAC = findViewById<Button>(R.id.buttonAC)
+        buttonAC.setOnClickListener {
+            textViewDisplay.text == "0"
+            textViewDisplay.text = textViewDisplay.text.toString()
+        }
     }
 }
