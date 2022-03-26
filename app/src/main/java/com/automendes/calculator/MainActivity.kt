@@ -140,8 +140,7 @@ class MainActivity : AppCompatActivity() {
 
         val buttonAC = findViewById<Button>(R.id.buttonAC)
         buttonAC.setOnClickListener {
-            textViewDisplay.text == "0"
-            textViewDisplay.text = textViewDisplay.text.toString()
+            textViewDisplay.text = "0"
         }
     }
 }
