@@ -2,132 +2,54 @@ package com.automendes.calculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+    lateinit var textViewDisplay : TextView
+    val calculatorBrain  : CalculatorBrain = CalculatorBrain()
+    var isInTheMiddleOfIntroduction = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val textViewDisplay = findViewById<TextView>(R.id.TextViewDisplay)
-        val button1 = findViewById<Button>(R.id.button1)
-        button1.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "1"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "1"
-        }
-        val button2 = findViewById<Button>(R.id.button2)
-        button2.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "2"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "2"
+        textViewDisplay = findViewById<TextView>(R.id.TextViewDisplay)
+
+        //Clear screen
+        findViewById<Button>(R.id.buttonAC).setOnClickListener {
+            textViewDisplay.text = "0"
+            isInTheMiddleOfIntroduction = false
+            calculatorBrain.clear()
         }
 
-        val button3 = findViewById<Button>(R.id.button3)
-        button3.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "3"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "3"
-        }
+        // button numbers
+        findViewById<Button>(R.id.button0).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.button1).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.button2).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.button3).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.button4).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.button5).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.button6).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.button7).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.button8).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.button9).setOnClickListener(onClickNumber)
+        findViewById<Button>(R.id.buttonPoint).setOnClickListener(onClickNumber)
 
-        val button4 = findViewById<Button>(R.id.button4)
-        button4.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "4"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "4"
-        }
+        //operators
+        findViewById<Button>(R.id.buttonPlus).setOnClickListener(this)
+        findViewById<Button>(R.id.buttonSubtraction).setOnClickListener(this)
+        findViewById<Button>(R.id.buttonMultiplication).setOnClickListener(this)
+        findViewById<Button>(R.id.buttonDivision).setOnClickListener(this)
 
-        val button5 = findViewById<Button>(R.id.button5)
-        button5.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "5"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "5"
-        }
-
-        val button6 = findViewById<Button>(R.id.button6)
-        button6.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "6"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "6"
-        }
-
-        val button7 = findViewById<Button>(R.id.button7)
-        button7.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "7"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "7"
-        }
-
-        val button8 = findViewById<Button>(R.id.button8)
-        button8.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "8"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "8"
-        }
-
-        val button9 = findViewById<Button>(R.id.button9)
-        button9.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "9"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "9"
-        }
-
-        val button0 = findViewById<Button>(R.id.button0)
-        button0.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "0"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "0"
-        }
-
-        val buttonPlus = findViewById<Button>(R.id.buttonPlus)
-        buttonPlus.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "0+"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "+"
-        }
-
-        val buttonLess = findViewById<Button>(R.id.buttonSubtraction)
-        buttonLess.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "0-"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "-"
-        }
-
-        val buttonMultiplicate = findViewById<Button>(R.id.buttonMultiplication)
-        buttonMultiplicate.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "0*"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "*"
-        }
-
-        val buttonDivision = findViewById<Button>(R.id.buttonDivision)
-        buttonDivision.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "0/"
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "/"
-        }
-
-        val buttonPoint = findViewById<Button>(R.id.buttonPoint)
-        buttonPoint.setOnClickListener {
-            if (textViewDisplay.text == "0")
-                textViewDisplay.text = "0."
-            else
-                textViewDisplay.text = textViewDisplay.text.toString() + "."
+        findViewById<Button>(R.id.buttonEqual).setOnClickListener {
+            if (calculatorBrain.doBinaryOperation(textViewDisplay.text.toString().toDouble())){
+                textViewDisplay.text = calculatorBrain.operand.toString()
+                isInTheMiddleOfIntroduction = false
+                calculatorBrain.operand = null
+            }
         }
 
         val buttonPercentage = findViewById<Button>(R.id.buttonPercentage)
@@ -137,10 +59,57 @@ class MainActivity : AppCompatActivity() {
             else
                 textViewDisplay.text = textViewDisplay.text.toString() + "%"
         }
+    }
 
-        val buttonAC = findViewById<Button>(R.id.buttonAC)
-        buttonAC.setOnClickListener {
-            textViewDisplay.text = "0"
+    var onClickNumber : ((view: View)->Unit) = {
+
+        val buttonClicked = it as Button
+        if (isInTheMiddleOfIntroduction) {
+
+            if (!(buttonClicked.text == "." && textViewDisplay.text.contains("."))) {
+                if (textViewDisplay.text == "0") {
+
+                    if (buttonClicked.text == ".") {
+                        textViewDisplay.text = "0."
+                    } else {
+                        textViewDisplay.text = buttonClicked.text
+                    }
+
+                } else {
+                    textViewDisplay.text = textViewDisplay.text.toString() + buttonClicked.text
+
+                }
+            }
+        } else {
+            if (buttonClicked.text == ".") {
+                textViewDisplay.text = "0."
+            } else {
+                textViewDisplay.text = buttonClicked.text
+            }
+
+            isInTheMiddleOfIntroduction = true
         }
+    }
+
+    override fun onClick(view: View?) {
+        if (calculatorBrain.doBinaryOperation(textViewDisplay.text.toString().toDouble())){
+            textViewDisplay.text = calculatorBrain.operand.toString()
+        }else{
+            calculatorBrain.operand = textViewDisplay.text.toString().toDouble()
+        }
+
+        val buttonClicked = view as Button
+        val operator = when (buttonClicked.text) {
+            "+" -> {Operator.add}
+            "-" -> {Operator.subtract}
+            "/" -> {Operator.divide}
+            "*" -> {Operator.multiply}
+            else -> {Operator.add}
+        }
+
+        calculatorBrain.operator = operator
+        calculatorBrain.operand = textViewDisplay.text.toString().toDouble()
+
+        isInTheMiddleOfIntroduction = false
     }
 }
